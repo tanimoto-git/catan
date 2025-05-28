@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>数字を記憶するスクリプト</title>
+    <body>
+      <h2>カタン拠点期待値早見表</h2>
+
+    </body>
+    <script>
+        let storedNumbers = []; // 数字を記憶する配列
+        const percentages = {
+            '0': 0.00,
+            '2': 2.78,
+            '3': 5.56,
+            '4': 8.33,
+            '5': 11.11,
+            '6': 13.89,
+            '8': 13.89,
+            '9': 11.11,
+            '10': 8.33,
+            '11': 5.56,
+            '12': 2.78
+        };
+
+        function storeAndDisplay() {
+            // 各プルダウンから値を取得
+            storedNumbers = []; // 配列を初期化
+            let totalPercentageA = 0; // グループAの合計の割合を初期化
+            let totalPercentageB = 0; // グループBの合計の割合を初期化
+
+            // グループAの計算
+            for (let i = 1; i <= 3; i++) {
+                const selectField = document.getElementById(`numberSelect${i}`);
+                const value = selectField.value;
+                storedNumbers.push(value); // 値を配列に保存
+                totalPercentageA += percentages[value] || 0; // グループAの割合を合計に加算
+            }
+
+            // グループBの計算
+            for (let i = 4; i <= 6; i++) {
+                const selectField = document.getElementById(`numberSelect${i}`);
+                const value = selectField.value;
+                storedNumbers.push(value); // 値を配列に保存
+                totalPercentageB += percentages[value] || 0; // グループBの割合を合計に加算
+            }
+
+            // 保存した値と合計の割合を表示
+            const displayArea = document.getElementById('displayArea');
+            let comparisonMessage = '';
+
+            if (totalPercentageA > totalPercentageB) {
+                const difference = totalPercentageA - totalPercentageB;
+                comparisonMessage = `拠点候補Aの方が約${difference.toFixed(2)}%期待値が高いです。`;
+            } else if (totalPercentageB > totalPercentageA) {
+                const difference = totalPercentageB - totalPercentageA;
+                comparisonMessage = `拠点候補Bの方が約${difference.toFixed(2)}%期待値が高いです。`;
+            } else {
+                comparisonMessage = 'どちらにおいても同じ確率で資源が手に入ります。';
+            }
+
+            displayArea.innerHTML = 
+               // `グループAの記憶した数字: ${storedNumbers.slice(0, 3).join(', ')}<br>` +
+                `グループAの合計の割合: ${totalPercentageA.toFixed(2)}%<br>` +
+               // `グループBの記憶した数字: ${storedNumbers.slice(3).join(', ')}<br>` +
+                `グループBの合計の割合: ${totalPercentageB.toFixed(2)}%<br><br>` +
+                comparisonMessage;
+        }
+    </script>
+</head>
+<body>
+  <p>拠点候補A</p>
+    <select id="numberSelect1">
+        <option value="">未入力</option>
+        <option value="0">-</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+
+    <select id="numberSelect2">
+        <option value="">未入力</option>
+        <option value="0">-</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+
+    <select id="numberSelect3">
+        <option value="">未入力</option>
+        <option value="0">-</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+    <br>
+    <p>拠点候補B</p>
+    <select id="numberSelect4">
+        <option value="">未入力</option>
+        <option value="0">-</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+
+    <select id="numberSelect5">
+        <option value="">未入力</option>
+        <option value="0">-</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+
+    <select id="numberSelect6">
+        <option value="">未入力</option>
+        <option value="0">-</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+    <br>
+    <br>
+    <button onclick="storeAndDisplay()">計算する</button>
+    <div id="displayArea"></div>
+
+</body>
+</html>
