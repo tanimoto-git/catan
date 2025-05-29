@@ -5,9 +5,11 @@ body {
     font-family: inherit; 
     margin: 0;
     padding: 0;
+    max-width: 270px; /* 表示領域を小さくする */
+    margin: auto; /* 中央に配置 */
 }
 
-@media (max-width: 600px) {
+@media (max-width: 270px) {
     body {
         padding: 10px; 
     }
