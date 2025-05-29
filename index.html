@@ -2,11 +2,8 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>数字を記憶するスクリプト</title>
-    <body>
-      <h2>カタン拠点期待値早見表</h2>
-
-    </body>
+    <title>確率計算</title>
+    <link rel="stylesheet" href="style.css"> 
     <script>
         let storedNumbers = []; // 数字を記憶する配列
         const percentages = {
@@ -60,16 +57,16 @@
             }
 
             displayArea.innerHTML = 
-               // `グループAの記憶した数字: ${storedNumbers.slice(0, 3).join(', ')}<br>` +
                 `グループAの合計の割合: ${totalPercentageA.toFixed(2)}%<br>` +
-               // `グループBの記憶した数字: ${storedNumbers.slice(3).join(', ')}<br>` +
                 `グループBの合計の割合: ${totalPercentageB.toFixed(2)}%<br><br>` +
                 comparisonMessage;
         }
     </script>
 </head>
 <body>
-  <p>拠点候補A</p>
+    <h2>カタン拠点期待値早見表</h2>
+    
+    <p>拠点候補A</p>
     <select id="numberSelect1">
         <option value="">未入力</option>
         <option value="0">-</option>
@@ -115,6 +112,7 @@
         <option value="12">12</option>
     </select>
     <br>
+    
     <p>拠点候補B</p>
     <select id="numberSelect4">
         <option value="">未入力</option>
@@ -160,8 +158,8 @@
         <option value="11">11</option>
         <option value="12">12</option>
     </select>
-    <br>
-    <br>
+    <br><br>
+    
     <button onclick="storeAndDisplay()">計算する</button>
     <div id="displayArea"></div>
 
