@@ -14,6 +14,7 @@ body {
     }
 }
 
+
 /* フォントサイズを設定 */
 h2 {
     font-size: 48px; /* 見出しのサイズを大きく */
@@ -27,10 +28,233 @@ select {
     font-size: 36px; /* セレクトボックスのフォントサイズを大きく */
 }
 
+.base-select {
+    font-size: 16px; /* 拠点期待値計算のセレクトボックスのフォントサイズ */
+    padding: 5px; /* パディング */
+    width: 80px; /* 幅 */
+}
+
 button {
-    font-size: 36px; /* ボタンのフォントサイズを大きく */
+    font-size: 36px; /* 切り替えボタン&計算するボタン&各拠点の期待値を計算するマップ */
 }
 
 #displayArea {
-    font-size: 36px; /* 表示領域のフォントサイズを大きく */
+    font-size: 36px; /* 拠点期待値計算の計算結果のフォント */
 }
+
+/* アップデート情報のスタイル */
+#updateInfo p {
+    font-size: 16px; /* アップデート情報のサイズを16pxに設定 */
+    line-height: 1.0; /* 行間を設定 */
+    color: #333; /* 文字色を設定 */
+}
+
+h3 {
+    font-size: 24px; /* アップデート情報見出しのサイズを24pxに設定 */
+    margin-bottom: 10px; /* 下のマージンを設定 */
+}
+
+
+/*ここからマップ用の新機能*/
+select {
+    font-size: 16px; /* フォントサイズ */
+    padding: 0px; /* 内側の余白 */
+    width: 50px; /* 幅 */
+    height: 30px; /* 高さ */
+    border: 1px solid #ccc; /* 枠線のスタイル */
+    border-radius: 4px; /* 角を丸く */
+    background-color: #fff; /* 背景色 */
+}
+
+.hexagon select {
+    margin: 0px; /* プルダウンの間隔 */
+}
+
+
+.container {
+    position: relative; /* 子要素を絶対位置で配置するために必要 */
+    width: 560px; /* コンテナの幅 */
+    height: 560px; /* コンテナの高さ */
+    border: 1px solid #ccc; /* コンテナの境界線（デバッグ用） */
+}
+
+
+
+.hexagon {
+    position: absolute; /* 絶対位置で配置 */
+    width: 100px; /* 六角形の幅 */
+    height: 86.6px; /* 六角形の高さ */
+    background-color: #e6e6fa; /* 初期の六角形の色 */
+clip-path: polygon(
+  50% 0%,        /* A: 上 */
+  90% 25%,     /* B: 右上 */
+  90% 75%,     /* C: 右下 */
+  50% 100%,      /* D: 下 */
+  9% 75%,      /* E: 左下 */
+  9% 25%       /* F: 左上 */
+);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; /* 縦に並べる */
+}
+
+
+/* 各六角形の座標を指定 */
+#hexagon1 {
+    top: 70px;
+    left: 130px;
+}
+#hexagon2 {
+    top: 70px;
+    left: 230px;
+}
+#hexagon3 {
+    top: 70px;
+    left: 330px;
+}
+#hexagon4 {
+    top: 150px;
+    left: 80px;
+}
+#hexagon5 {
+    top: 150px;
+    left: 180px;
+}
+#hexagon6 {
+    top: 150px;
+    left: 280px;
+}
+#hexagon7 {
+    top: 150px;
+    left: 380px;
+}
+#hexagon8 {
+    top: 230px;
+    left: 30px;
+}
+#hexagon9 {
+    top: 230px;
+    left: 130px;
+}
+#hexagon10 {
+    top: 230px;
+    left: 230px;
+}
+#hexagon11 {
+    top: 230px;
+    left: 330px;
+}
+#hexagon12 {
+    top: 230px;
+    left: 430px;
+}
+#hexagon13 {
+    top: 310px;
+    left: 80px;
+}
+#hexagon14 {
+    top: 310px;
+    left: 180px;
+}
+#hexagon15 {
+    top: 310px;
+    left: 280px;
+}
+#hexagon16 {
+    top: 310px;
+    left: 380px;
+}
+#hexagon17 {
+    top: 390px;
+    left: 130px;
+}
+#hexagon18 {
+    top: 390px;
+    left: 230px;
+}
+#hexagon19 {
+    top: 390px;
+    left: 330px;
+}
+
+
+/* マップ期待値計算の拠点側 */
+
+
+/* マップ期待値計算の拠点候補の円 */
+.map-circle {
+    width: 35px; /* 丸の直径 */
+    height: 35px; /* 丸の直径 */
+    background-color: white; /* 丸の色 */
+    border-radius: 50%; /* 丸にするための設定 */
+    position: absolute; /* 位置を絶対配置に */
+    border: 2px solid black; /* 枠線の太さと色 */
+    display: flex; /* フレックスボックスを使用 */
+    justify-content: center; /* 横方向の中央揃え */
+    align-items: center; /* 縦方向の中央揃え */
+    font-size: 14px; /* 文字の大きさ */
+}
+/* マップ期待値計算の拠点候補の円の文字 */
+.map-circle span {
+    font-size: 12px; /* 合計の文字の大きさ */
+    color: #333; /* 文字色 */
+    text-align: center; /* 中央揃え */
+}
+
+
+/* 各円の位置を指定 */
+#map-circle1 {top: 40px; left: 160px;}
+#map-circle2 {top: 40px; left: 260px;}
+#map-circle3 {top: 40px; left: 360px;}
+#map-circle4 {top: 65px; left: 110px;}
+#map-circle5 {top: 65px; left: 210px;}
+#map-circle6 {top: 65px; left: 310px;}
+#map-circle7 {top: 65px; left: 410px;}
+#map-circle8 {top: 120px; left: 110px;}
+#map-circle9 {top: 120px; left: 210px;}
+#map-circle10 {top: 120px; left: 310px;}
+#map-circle11 {top: 120px; left: 410px;}
+#map-circle12 {top: 145px; left: 60px;}
+#map-circle13 {top: 145px; left: 160px;}
+#map-circle14 {top: 145px; left: 260px;}
+#map-circle15 {top: 145px; left: 360px;}
+#map-circle16 {top: 145px; left: 460px;}
+#map-circle17 {top: 200px; left: 60px;}
+#map-circle18 {top: 200px; left: 160px;}
+#map-circle19 {top: 200px; left: 260px;}
+#map-circle20 {top: 200px; left: 360px;}
+#map-circle21 {top: 200px; left: 460px;}
+#map-circle22 {top: 225px; left: 10px;}
+#map-circle23 {top: 225px; left: 110px;}
+#map-circle24 {top: 225px; left: 210px;}
+#map-circle25 {top: 225px; left: 310px;}
+#map-circle26 {top: 225px; left: 410px;}
+#map-circle27 {top: 225px; left: 510px;}
+#map-circle28 {top: 280px; left: 10px;}
+#map-circle29 {top: 280px; left: 110px;}
+#map-circle30 {top: 280px; left: 210px;}
+#map-circle31 {top: 280px; left: 310px;}
+#map-circle32 {top: 280px; left: 410px;}
+#map-circle33 {top: 280px; left: 510px;}
+#map-circle34 {top: 305px; left: 60px;}
+#map-circle35 {top: 305px; left: 160px;}
+#map-circle36 {top: 305px; left: 260px;}
+#map-circle37 {top: 305px; left: 360px;}
+#map-circle38 {top: 305px; left: 460px;}
+#map-circle39 {top: 360px; left: 60px;}
+#map-circle40 {top: 360px; left: 160px;}
+#map-circle41 {top: 360px; left: 260px;}
+#map-circle42 {top: 360px; left: 360px;}
+#map-circle43 {top: 360px; left: 460px;}
+#map-circle44 {top: 385px; left: 110px;}
+#map-circle45 {top: 385px; left: 210px;}
+#map-circle46 {top: 385px; left: 310px;}
+#map-circle47 {top: 385px; left: 410px;}
+#map-circle48 {top: 440px; left: 110px;}
+#map-circle49 {top: 440px; left: 210px;}
+#map-circle50 {top: 440px; left: 310px;}
+#map-circle51 {top: 440px; left: 410px;}
+#map-circle52 {top: 465px; left: 160px;}
+#map-circle53 {top: 465px; left: 260px;}
+#map-circle54 {top: 465px; left: 360px;}
