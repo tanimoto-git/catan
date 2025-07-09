@@ -1029,13 +1029,146 @@
             }
         </script>
 <!-- マップ期待値計算用の計算計算結果用 終了 -->   
+
+
+
+<!-- マップ期待値計算入力ショートカット用ポップアップ表示用 開始 -->
+    <button onclick="openModal01()">入力ショートカット</button>
+
+    <div id="myModal01" class="modal01">
+      <div class="modal-content01">
+        <span class="close01" onclick="closeModal01()">&times;</span>
+        <h4>各タイルを左上から順に入力してください</h4>
+        <h4>木:き 土:つ 羊:ひ 麦:む 鉄:て 砂:す</h4>
+        <input type="text" id="popupInput01" placeholder="ひらがなを入力">
+        <br>
+        <h4>数字が「2」の場所を選択してください</h4>
+        <select id="popupInput02">
+        <option value="2">上</option>
+        <option value="4">左上</option>
+        <option value="7">右上</option>
+        <option value="13">左下</option>
+        <option value="16">右下</option>
+        <option value="18">下</option>
+        </select>
+
+        <button onclick="submitInput01()">送信</button>
+      </div>
     </div>
+<!-- マップ期待値計算入力ショートカット用ポップアップ表示用 終了 -->
+     </div>
+
+<!-- マップ期待値計算入力ショートカット用ポップアップ処理 開始 -->
+        <script>
+          function openModal01() {
+            document.getElementById('myModal01').style.display = 'block';
+          }
+
+          function closeModal01() {
+            document.getElementById('myModal01').style.display = 'none';
+          }
+
+          function submitInput01() {
+            const mapInput = document.getElementById('popupInput01').value.trim();
+            const tileInput = parseInt(document.getElementById('popupInput02').value.trim());
+
+            const charToMaterial = {
+              'き': '木', 'つ': '土', 'ひ': '羊',
+              'む': '麦', 'て': '鉄', 'す': '砂'
+            };
+
+            for (let i = 0; i < mapInput.length && i < 19; i++) {
+              const char = mapInput[i];
+              const material = charToMaterial[char];
+              if (material) {
+                const selectId = `materialSelect${i + 1}`;
+                const hexId = `hexagon${i + 1}`;
+                const select = document.getElementById(selectId);
+                if (select) {
+                  select.value = material;
+                  changeColor(hexId, selectId);
+                }
+              }
+            }
+            // 6通りのパターンの対応表を記載
+            const numberMap = {
+              2: new Map([
+                [3,5],[2,2],[1,6],[4,3],[8,8],[13,10],[17,9],[18,12],[19,11],
+                [16,4],[12,8],[7,10],[6,9],[5,4],[9,5],[14,6],[15,3],[11,11]
+              ]),
+              4: new Map([
+                [1,5],[4,2],[8,6],[13,3],[17,8],[18,10],[19,9],[16,12],[12,11],
+                [7,4],[3,8],[2,10],[5,9],[9,4],[14,5],[15,6],[11,3],[6,11]
+              ]),
+              13: new Map([
+                [8,5],[13,2],[17,6],[18,3],[19,8],[16,10],[12,9],[7,12],[3,11],
+                [2,4],[1,8],[4,10],[9,9],[14,4],[15,5],[11,6],[6,3],[5,11]
+              ]),
+              18: new Map([
+                [17,5],[18,2],[19,6],[16,3],[12,8],[7,10],[3,9],[2,12],[1,11],
+                [4,4],[8,8],[13,10],[14,9],[15,4],[11,5],[6,6],[5,3],[9,11]
+              ]),
+              16: new Map([
+                [19,5],[16,2],[12,6],[7,3],[3,8],[2,10],[1,9],[4,12],[8,11],
+                [13,4],[17,8],[18,10],[15,9],[11,4],[6,5],[5,6],[9,3],[14,11]
+              ]),
+              7: new Map([
+                [12,5],[7,2],[3,6],[2,3],[1,8],[4,10],[8,9],[13,12],[17,11],
+                [18,4],[19,8],[16,10],[11,9],[6,4],[5,5],[9,6],[14,3],[15,11]
+              ])
+            };
+
+            const entryMap = numberMap[tileInput];
+            if (entryMap) {
+              const entries = Array.from(entryMap.entries());
+              const tileOrder = entries.map(entry => entry[0]);
+              const valueQueue = entries.map(entry => entry[1]);
+              let valuePtr = 0;
+
+              // メイン：numberMap順にセット（砂スキップあり）
+              for (let i = 0; i < tileOrder.length; i++) {
+                const tileNum = tileOrder[i];
+                const material = document.getElementById(`materialSelect${tileNum}`);
+                const numberSelect = document.getElementById(`numberSelect${tileNum}`);
+                if (!material || !numberSelect) continue;
+
+                if (material.value === '砂') {
+                  continue;
+                }
+
+                if (valuePtr < valueQueue.length) {
+                  numberSelect.value = valueQueue[valuePtr].toString();
+                  valuePtr++;
+                }
+              }
+
+              // 補完：numberSelect1〜19 の空きに余りを順にセット
+              for (let i = 1; i <= 19 && valuePtr < valueQueue.length; i++) {
+                const numSel = document.getElementById(`numberSelect${i}`);
+                if (!numSel || numSel.value !== '') continue;
+
+                const material = document.getElementById(`materialSelect${i}`);
+                if (material && material.value !== '砂') {
+                  numSel.value = valueQueue[valuePtr].toString();
+                  valuePtr++;
+                }
+              }
+            }
+
+            closeModal01();
+            alert('マップを更新しました。');
+          }
+        </script>
+<!-- マップ期待値計算入力ショートカット用ポップアップ処理 終了 -->
+
+
 
     <br><br><br><br><br><br><br><br>
     <hr> 
 <!-- アップデート情報欄 開始 -->    
     <h3>アップデート情報</h3>
     <div id="updateInfo">
+        <p>2025/07/09:マップ期待値計算機能にショートカット入力が対応</p>   
         <p>2025/06/08:マップ期待値計算機能の実装</p>   
         <p>2025/06/04:URLを変更</p>
         <p>2025/06/02:アップデート情報欄追加</p>
