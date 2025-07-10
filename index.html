@@ -216,7 +216,7 @@
             <option value="羊">羊</option>
             <option value="鉄">鉄</option>
         </select>
-        <select id="numberSelect1" onchange="updateDisplay()">
+        <select id="numberSelect1" class="map-number-select" onchange="updateDisplay()">
             <option value="">-</option>
             <option value="0">0</option>
             <option value="2">2</option>
@@ -988,6 +988,28 @@
 
 <!-- 六角形タイルの色設定 終了 -->        
 
+<!-- マップ上の8と6を赤色にする処理 開始 -->   
+    <script>
+        function updateAllNumberSelectColors() {
+          const selects = document.querySelectorAll('select[id^="numberSelect"]');
+
+            selects.forEach(select => {
+            const value = select.value;
+
+            // 古い value-* クラスを削除
+            select.className = [...select.classList]
+              .filter(cls => !cls.startsWith('value-'))
+              .join(' ');
+
+            // クラスを追加
+            if (value) {
+              select.classList.add('value-' + value);
+              }   
+            });
+        }
+    </script>
+<!-- マップ上の8と6を赤色にする処理 終了 -->   
+
 <!-- マップ期待値計算用の計算ボタン 開始 -->    
         <button onclick="updateCircleDisplays(); updateDisplay();">各拠点の期待値を計算する</button>
 <!-- マップ期待値計算用の計算ボタン 終了 -->
@@ -1070,6 +1092,8 @@
                 container.style.backgroundColor = '#ffffff';
             }
         }
+
+        updateAllNumberSelectColors();
     }
         </script>
 <!-- マップ期待値計算用の計算計算結果用 終了 -->   
@@ -1169,7 +1193,6 @@
               const valueQueue = entries.map(entry => entry[1]);
               let valuePtr = 0;
 
-              // メイン：numberMap順にセット（砂スキップあり）
               for (let i = 0; i < tileOrder.length; i++) {
                 const tileNum = tileOrder[i];
                 const material = document.getElementById(`materialSelect${tileNum}`);
@@ -1186,7 +1209,6 @@
                 }
               }
 
-              // 補完：numberSelect1〜19 の空きに余りを順にセット
               for (let i = 1; i <= 19 && valuePtr < valueQueue.length; i++) {
                 const numSel = document.getElementById(`numberSelect${i}`);
                 if (!numSel || numSel.value !== '') continue;
