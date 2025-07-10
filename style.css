@@ -314,3 +314,34 @@ h4 {
 #popupInput02 {
   width: 100px;
 }
+
+
+
+
+select {
+  color: black;
+
+}
+
+/* 値が6や8のときに文字を赤に */
+select.value-6,
+select.value-8 {
+  color: rgb(228, 0, 0);
+  font-weight: bold;
+}
+
+select.value-2,
+select.value-3,
+select.value-11,
+select.value-12 {
+  color: rgb(0, 0, 0);
+  font-weight: normal;
+}
+
+select.value-4,
+select.value-5,
+select.value-9,
+select.value-10 {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
