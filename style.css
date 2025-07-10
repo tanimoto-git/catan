@@ -304,3 +304,13 @@ h4 {
     color: black;
     text-decoration: none;
   }
+
+
+.small-button {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+#popupInput02 {
+  width: 100px;
+}
