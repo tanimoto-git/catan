@@ -989,7 +989,7 @@
 <!-- 六角形タイルの色設定 終了 -->        
 
 <!-- マップ期待値計算用の計算ボタン 開始 -->    
-        <button onclick="updateCircleDisplays()">各拠点の期待値を計算する</button>
+        <button onclick="updateCircleDisplays(); updateDisplay();">各拠点の期待値を計算する</button>
 <!-- マップ期待値計算用の計算ボタン 終了 -->
  
 <!-- マップ期待値計算用の計算計算結果用 開始 -->   
@@ -1026,7 +1026,51 @@
                     麦の期待値: ${totalProbabilities['麦'].toFixed(2)}%<br>
                     鉄の期待値: ${totalProbabilities['鉄'].toFixed(2)}%<br>
                 `;
+            
+
+       // 円の色を変える処理を実行
+       
+        // ① すべての円の表示値を取得（文字列 "13.9%" → 数値 13.9 に変換）
+        let mapCircledatas01 = [];
+        for (let i = 1; i <= 54; i++) {
+            const text = document.getElementById(`totalDisplay${i}`).innerText;
+            const value = parseFloat(text.replace('%', '')) || 0;
+            mapCircledatas01.push(value);
             }
+
+        // ② 重複を除いて、大きい順にソート
+        let mapCircledatas02 = [...new Set(mapCircledatas01)].sort((a, b) => b - a);
+
+        // ③ 上位3件の数値を定義（存在しない場合は null）
+        const mapCircledata01 = mapCircledatas02[0] ?? null;
+        const mapCircledata02 = mapCircledatas02[1] ?? null;
+        const mapCircledata03 = mapCircledatas02[2] ?? null;
+
+        // ④ 背景色リセット＆色付け
+        for (let i = 1; i <= 54; i++) {
+            const span = document.getElementById(`totalDisplay${i}`);
+            const container = document.getElementById(`map-circle${i}`);
+
+            const val = parseFloat(span.innerText.replace('%', '')) || 0;
+
+            if (val === 0) {
+                container.style.backgroundColor = '#ffffff';
+                continue; 
+                }
+
+            // 上位3件に応じて色分け
+            if (val === mapCircledata01) {
+                container.style.backgroundColor = '#ff7777';
+            } else if (val === mapCircledata02) {
+                container.style.backgroundColor = '#ffaaaa';
+            } else if (val === mapCircledata03) {
+                container.style.backgroundColor = '#ffdddd';
+            } else {
+                // その他はデフォルト（例：白に戻す）
+                container.style.backgroundColor = '#ffffff';
+            }
+        }
+    }
         </script>
 <!-- マップ期待値計算用の計算計算結果用 終了 -->   
 
@@ -1052,7 +1096,7 @@
         <option value="18">下</option>
         </select>
 
-        <button onclick="submitInput01()">送信</button>
+        <button onclick="submitInput01()" class="small-button" >送信</button>
       </div>
     </div>
 <!-- マップ期待値計算入力ショートカット用ポップアップ表示用 終了 -->
@@ -1167,8 +1211,11 @@
     <hr> 
 <!-- アップデート情報欄 開始 -->    
     <h3>アップデート情報</h3>
-    <div id="updateInfo">
-        <p>2025/07/09:マップ期待値計算機能にショートカット入力が対応</p>   
+    <div id="updateInfo"> 
+        <p>2025/07/10:マップ期待値計算機能で期待値の高い拠点候補に色を追加</p>  
+        <p>2025/07/10:一部UIの調整</p> 
+        <p>2025/07/10:軽微な不具合の修正</p>           
+        <p>2025/07/09:マップ期待値計算機能にショートカット入力を追加</p>   
         <p>2025/06/08:マップ期待値計算機能の実装</p>   
         <p>2025/06/04:URLを変更</p>
         <p>2025/06/02:アップデート情報欄追加</p>
