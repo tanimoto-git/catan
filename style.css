@@ -311,6 +311,12 @@ h4 {
   font-size: 12px;
 }
 
+
+/* 入力用ショートカットのテキストボックス */
+#popupInput01{
+    width: 350px;
+}
+
 #popupInput02 {
   width: 100px;
 }
